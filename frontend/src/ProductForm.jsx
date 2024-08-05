@@ -50,7 +50,7 @@ const ProductForm = () => {
             alert('Failed to save product');
         }
     };
-
+  
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
             <Form.Group controlId="title">
@@ -67,7 +67,7 @@ const ProductForm = () => {
             </Form.Group>
             <Form.Group controlId="image">
                 <Form.Label>Image</Form.Label>
-                <Form.Control type="file" {...register('image',{required:"choose a file....!!"})}  />
+                <Form.Control type="file" {...register('image',)}  />
               <span className='text-danger'>{ errors.image?.message}</span>
             </Form.Group>
             <Button className='mt-3' variant={id ? "success": "primary"} type="submit">
