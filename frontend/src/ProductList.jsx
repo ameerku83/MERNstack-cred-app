@@ -23,7 +23,7 @@ const ProductList = () => {
             alert('Failed to delete product');
         }
     };
-
+   if(products.length===0)return( <button> <h3><Link to={'/create'} >add product</Link>  </h3></button> )
     return (
         <div  >
         <Table striped bordered hover className='mt-5 shadow text-center'>
@@ -42,7 +42,7 @@ const ProductList = () => {
                         <td style={{maxWidth:200,overflow:"auto"}} >{product.title}</td>
                         <td>Rs:{product.price}/-</td>
                         <td>{product.quantity}</td>
-                        <td><img src={`http://localhost:5000/${product.image}`} alt={product.title} style={{ width: '100px' }} /></td>
+                        <td><img src={`https://ameerku-cred-app.onrender.com/${product.image}`} alt={product.title} style={{ width: '100px' }} /></td>
                         <td >
                             <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:5}}>
 
