@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'https://ameerku-cred-app.onrender.com'
+    baseURL: 'https://ameerku-cred-app.onrender.com/api'
 });
 
 export const apiProduct = {
