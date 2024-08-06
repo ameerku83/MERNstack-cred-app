@@ -9,11 +9,11 @@ const AuthForm = ({ type }) => {
     const { register, handleSubmit,reset } = useForm();
     const navigate = useNavigate();
 useEffect(()=>{
-            const timer= setTimeout(()=>{
+            setTimeout(()=>{
                 navigate('/');
             },3000)
-            return( ()=> clearTimeout(timer)
-              )
+            
+              
 
         },[navigate])
     const onSubmit = async (data) => {
