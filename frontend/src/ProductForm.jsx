@@ -62,7 +62,7 @@ const FormPage = () => {
       }
     
     }
-  id?  ("product updated") :  ("product added")
+  id?  alert("product updated") :  alert("product added")
     navigate('/');
   };
 
