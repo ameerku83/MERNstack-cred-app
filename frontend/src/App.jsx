@@ -2,8 +2,6 @@
 
 
 import React from 'react';
-
-import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter as Router, Route, Routes, createBrowserRouter, Navigate } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import AuthForm from './AuthForm';
