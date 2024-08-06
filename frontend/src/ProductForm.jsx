@@ -8,7 +8,8 @@ const FormPage = () => {
   const { register, handleSubmit, setValue } = useForm();
   const navigate = useNavigate();
   const { id } = useParams();
- window.location.replace("https://ameerku83-cred-app.onrender.com/")
+     id? window.location.replace(`https://ameerku83-cred-app.onrender.com/edit/${id}`):window.location.replace(`https://ameerku83-cred-app.onrender.com/create`)
+
   React.useEffect(() => {
     if (id) {
       axios.get(`https://ameerku-cred-app.onrender.com/products/${id}`,{
