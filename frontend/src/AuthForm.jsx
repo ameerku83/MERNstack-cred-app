@@ -29,7 +29,7 @@ const AuthForm = ({ type }) => {
             }
         } catch (err) {
             console.error(err);
-          alert("error.."+err)
+          alert( "error...."+err.response.data.message);
         }
     };
 
