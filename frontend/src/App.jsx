@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-
+import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter as Router, Route, Routes, createBrowserRouter, Navigate } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import AuthForm from './AuthForm';
@@ -11,6 +11,7 @@ import ProductForm from './ProductForm';
 import ProductList from './ProductList';
 import Root from './Root';
 import { ErrorPage } from './ErrorPage';
+
 
 
 // const App = () => {
@@ -32,7 +33,7 @@ import { ErrorPage } from './ErrorPage';
 // };
 
 const PrivetRoute =({children}) => {
-  const isAuth= localStorage.getItem("token12345678765!@#$%^&^%$##$(*&^^&",)
+  const isAuth= localStorage.getItem("token",)
 return isAuth ? children : <Navigate to="/login" />;
 };
 
@@ -48,8 +49,8 @@ const router=createBrowserRouter([
         element: <PrivetRoute><ProductList /></PrivetRoute> 
       },
       {
-        path:"/edit/:id",
-         element: <PrivetRoute><ProductForm /></PrivetRoute>
+        path:"edit/:id",
+         element: <PrivetRoute><ProductForm/></PrivetRoute>
       },
       {
         path:"/signup",

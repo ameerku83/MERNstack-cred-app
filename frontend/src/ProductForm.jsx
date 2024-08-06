@@ -1,80 +1,107 @@
-import React, { useEffect, useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
-import { useParams, useNavigate } from 'react-router-dom';
-import { apiProduct } from './api';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Form, Button, Container,  } from 'react-bootstrap';
 
-const ProductForm = () => {
-    const { id } = useParams();
-    const history = useNavigate();
-    const { register, handleSubmit, setValue,formState:{errors} } = useForm();
+const FormPage = () => {
+  const { register, handleSubmit, setValue } = useForm();
+  const navigate = useNavigate();
+  const { id } = useParams();
+
+  React.useEffect(() => {
+    if (id) {
+      axios.get(`https://ameerku-cred-app.onrender.com/products/${id}`,{
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+      }).then((response) => {
+        const product = response.data;
+        setValue('title', product.title);
+        setValue('description', product.description);
+        setValue('price', product.price);
+        setValue('image', product.image);
+      });
+    }
+  }, [id, setValue]);
+
+  const onSubmit = async (data) => {
+    const formData = new FormData();
+    formData.append('title', data.title);
+    formData.append('description', data.description);
+    formData.append('price', data.price);
+    formData.append('image', data.image[0]);
+
+    if (id) {
+      try {
+        await axios.put(`https://ameerku-cred-app.onrender.com/products/${id}`, formData,{
+          headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+              },
+        });
+       
+      } catch (error) {
+        console.log(error);
+       
+      }
+      
+    } else {
+      try {
+        await axios.post('https://ameerku-cred-app.onrender.com/products', formData,{
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          },
+        });
+        
+      } catch (error) {
+        console.log(error);
+       
+      }
     
+    }
+  id? await alert("product updated") : await alert("product added")
+    navigate('/');
+  };
 
-    useEffect(() => {
-        if (id) {
-            //apiProduct.getProduct(id)
-            axios.get("http://localhost:5000/api/products/"+id)
-                .then(response => {
-                    const { title, price, quantity, image } = response.data;
-                    
-                    setValue('title', title);
-                    setValue('price', price);
-                    setValue('quantity', quantity);
-                    setValue('image', image);
-                })
-                .catch(error => console.error(error));
-        }
-    }, [id, setValue]);
+  return (
+    <Container >
+    <Form className='mx-5'  onSubmit={handleSubmit(onSubmit)}>
+      <Form.Group controlId="title">
+        <Form.Label>Title</Form.Label>
+        <Form.Control type="text" {...register('title')} required />
+      </Form.Group>
 
-    const onSubmit = async (data) => {
-        const formData = new FormData();
-        formData.append('title', data.title);
-        formData.append('price', data.price);
-        formData.append('quantity', data.quantity);
-        if (data.image[0]) {
-            formData.append('image', data.image[0]);
-        }
-        try {
-            const token = localStorage.getItem('token');
-            if (id) {
-                await apiProduct.updateProduct(id, formData, token);
-                alert('Product updated successfully');
-            } else {
-                await apiProduct.createProduct(formData, token);
-                alert('Product created successfully');
-            }
-            history('/');
-        } catch (err) {
-            console.error(err);
-            alert('Failed to save product');
-        }
-    };
-  
-    return (
-        <Form onSubmit={handleSubmit(onSubmit)}>
-            <Form.Group controlId="title">
-                <Form.Label>Title</Form.Label>
-                <Form.Control type="text" {...register('title')} required />
-            </Form.Group>
-            <Form.Group controlId="price">
-                <Form.Label>Price</Form.Label>
-                <Form.Control type="number" step="0.01" {...register('price')} required />
-            </Form.Group>
-            <Form.Group controlId="quantity">
-                <Form.Label>Quantity</Form.Label>
-                <Form.Control type="number" {...register('quantity')} required />
-            </Form.Group>
-            <Form.Group controlId="image">
-                <Form.Label>Image</Form.Label>
-                <Form.Control type="file" {...register('image',)}  />
-              <span className='text-danger'>{ errors.image?.message}</span>
-            </Form.Group>
-            <Button className='mt-3' variant={id ? "success": "primary"} type="submit">
-                {id ? 'Update Product' : 'Create Product'}
-            </Button>
-        </Form>
-    );
+      <Form.Group controlId="description">
+        <Form.Label>Description</Form.Label>
+        <Form.Control as="textarea" rows={3}  {...register('description')} required />
+      </Form.Group>
+
+      <Form.Group controlId="price">
+        <Form.Label>Price</Form.Label>
+        <Form.Control type="number" {...register('price')} required />
+      </Form.Group>
+
+    {
+      id? <Form.Group controlId="image">
+      <Form.Label>Image</Form.Label>
+      <Form.Control type="file" {...register('image')}   />
+    </Form.Group> :
+     <Form.Group controlId="image">
+     <Form.Label>Image</Form.Label>
+     <Form.Control type="file" {...register('image')} required  />
+   </Form.Group>
+    } 
+
+      <Button variant="primary mt-2" type="submit">
+        {id? "update":"add product"}
+      </Button>
+    </Form>
+    </Container>
+    
+  );
 };
 
-export default ProductForm;
+export default FormPage;

@@ -1,7 +1,8 @@
+import axios from 'axios';
 import React from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { apiAuth } from './api';
+
 import { Link, useNavigate } from 'react-router-dom';
 
 const AuthForm = ({ type }) => {
@@ -11,8 +12,8 @@ const AuthForm = ({ type }) => {
     const onSubmit = async (data) => {
         try {
             if (type === 'login') {
-                const response = await apiAuth.login(data);
-                localStorage.setItem('token12345678765!@#$%^&^%$##$(*&^^&', response.data.token);
+                const response = await axios.post('http://localhost:5000/login', data );
+                localStorage.setItem('token', response.data.token);
                 reset()
                 navigate('/');
                 
@@ -20,7 +21,7 @@ const AuthForm = ({ type }) => {
                 
 
             } else {
-                await apiAuth.signup(data);
+                await axios.post('http://localhost:5000/signup', data);
                 alert('User created successfully');
                 reset()
                 navigate('/login');
@@ -28,7 +29,7 @@ const AuthForm = ({ type }) => {
             }
         } catch (err) {
             console.error(err);
-            alert( err.response.data.message);
+            alert( "error...."+err);
         }
     };
 
@@ -68,3 +69,9 @@ const AuthForm = ({ type }) => {
 };
 
 export default AuthForm;
+
+
+// headers: {
+//     'Content-Type': 'multipart/form-data',
+//     'Authorization': `Bearer ${localStorage.getItem('token')}`
+//   },
