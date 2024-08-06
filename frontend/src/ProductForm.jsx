@@ -41,7 +41,7 @@ const FormPage = () => {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
               },
         });
-       
+       alert("product updated")
       } catch (error) {
         console.log(error);
        
@@ -55,14 +55,14 @@ const FormPage = () => {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
           },
         });
-        
+        alert("product added")
       } catch (error) {
         console.log(error);
        
       }
     
     }
-  id?  alert("product updated") :  alert("product added")
+
     navigate('/');
   };
 
