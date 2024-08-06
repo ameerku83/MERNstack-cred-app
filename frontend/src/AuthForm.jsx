@@ -15,7 +15,7 @@ useEffect(()=>{
             
               
 
-        },[navigate])
+        },[])
     const onSubmit = async (data) => {
         try {
             if (type === 'login') {
