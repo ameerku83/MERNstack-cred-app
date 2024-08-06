@@ -25,6 +25,7 @@ const ProductListPage = () => {
       },
     });
     setProducts(products.filter((product) => product._id !== id));
+    alert("product deleted")
   };
 
   return (
