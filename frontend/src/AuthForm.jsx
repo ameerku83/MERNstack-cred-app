@@ -8,14 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 const AuthForm = ({ type }) => {
     const { register, handleSubmit,reset } = useForm();
     const navigate = useNavigate();
-useEffect(()=>{
-            setTimeout(()=>{
-                navigate('/');
-            },3000)
-            
-              
 
-        },[])
     const onSubmit = async (data) => {
         try {
             if (type === 'login') {
