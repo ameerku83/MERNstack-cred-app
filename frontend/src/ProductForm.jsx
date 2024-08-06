@@ -62,7 +62,7 @@ const FormPage = () => {
       }
     
     }
-  id? await alert("product updated") : await alert("product added")
+  id?  alert("product updated") :  alert("product added")
     navigate('/');
   };
 
