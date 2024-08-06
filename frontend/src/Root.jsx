@@ -6,7 +6,7 @@ import Navbar from 'react-bootstrap/Navbar';
 const Root = () => {
  const navigate=useNavigate()
   const toLogout = ()=>{
-    localStorage.removeItem("token12345678765!@#$%^&^%$##$(*&^^&")
+    localStorage.removeItem("token")
     navigate('/login')
 
   }
